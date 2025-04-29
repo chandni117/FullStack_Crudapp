@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import '../App.css'
-import { getData } from '../Api/PostApi';
+import { getData, postData } from '../Api/PostApi';
 import { PostCards } from "./PostCards";
 
 export const Form = () => {
@@ -19,12 +19,38 @@ export const Form = () => {
     },[])
     const handleInputChange = (e) => {
         const {name , value} = e.target;
-        console.log(e.target);
+        //console.log(e.target);
         setData((prev) => ({...prev,[name]: value }) );
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setData({ title: "",post: ""})
+        try{
+            // const res = await postData({
+            //     title: data.title,
+            //     body: data.post
+            //  });
+            // setApiData((prev) => [
+            //     ...prev,
+            //     {
+            //       title: res.data.title,
+            //       body: res.data.body
+            //     }
+            //   ]);
+
+            // setData({ title: "",post: ""})
+            const res = await postData(data);
+    console.log("res", res);
+
+    if (res.status === 201) {
+        setApiData([...data, res.data]);
+      setData({ title: "", body: "" });
+    }
+        }
+        catch(error)
+        {
+            console.log(error)
+        }
+        
     }
     return <>
         {/* <form onSubmit={handleSubmit}> */}
@@ -52,8 +78,8 @@ export const Form = () => {
                 onChange={handleInputChange}
                 />
             </div>
-                <button type="submit">ADD</button>
+                <button type="submit" >ADD</button>
         </form>
-        <PostCards apiData={apiData}/>
+        <PostCards apiData={apiData} setApiData={setApiData}/>
     </>
 }

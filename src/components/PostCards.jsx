@@ -1,4 +1,17 @@
-export const PostCards = ({apiData}) => {
+import { deleteData } from "../Api/PostApi";
+export const PostCards = ({apiData, setApiData}) => {
+    console.log("apidata", apiData);
+
+    const handleDeleteData = async (id) => {
+        try {
+             await deleteData(id);
+            setApiData(apiData.filter((prev) => prev.id !== id))
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
     return <>
     <section className="section-post">
         <ol>
@@ -10,7 +23,7 @@ export const PostCards = ({apiData}) => {
                         <p>Title: {title}</p>
                         <p>Body: {body}</p>
                         <button>Edit</button>
-                        <button className="btn-delete">Delete</button>
+                        <button className="btn-delete" onClick={() => handleDeleteData(id)}>Delete</button>
 
                     </li>
                     )

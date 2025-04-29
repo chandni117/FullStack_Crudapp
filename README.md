@@ -17,3 +17,6 @@ npm config set registry https://registry.npmjs.org/
 
 npm create vite@latest . -- --template react   //for creating react project
 
+
+//in axios we don't need to expicit convert the response in json format...Bydefault it gives us json format data.
+
