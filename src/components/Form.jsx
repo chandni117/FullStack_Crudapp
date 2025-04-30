@@ -25,21 +25,8 @@ export const Form = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            // const res = await postData({
-            //     title: data.title,
-            //     body: data.post
-            //  });
-            // setApiData((prev) => [
-            //     ...prev,
-            //     {
-            //       title: res.data.title,
-            //       body: res.data.body
-            //     }
-            //   ]);
-
-            // setData({ title: "",post: ""})
             const res = await postData(data);
-    console.log("res", res);
+            console.log("res", res);
 
     if (res.status === 201) {
         setApiData([...data, res.data]);
@@ -52,9 +39,9 @@ export const Form = () => {
         }
         
     }
-    return <>
-        {/* <form onSubmit={handleSubmit}> */}
-        <form onSubmit={handleSubmit}>
+    return <section>
+        <section className="section-form">
+        <form onSubmit={handleSubmit} >
             <div>
                 <label htmlFor="title"></label>
                 <input 
@@ -80,6 +67,8 @@ export const Form = () => {
             </div>
                 <button type="submit" >ADD</button>
         </form>
+        </section>
+        
         <PostCards apiData={apiData} setApiData={setApiData}/>
-    </>
+    </section>
 }

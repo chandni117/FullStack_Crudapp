@@ -4,8 +4,24 @@ export const PostCards = ({apiData, setApiData}) => {
 
     const handleDeleteData = async (id) => {
         try {
-             await deleteData(id);
-            setApiData(apiData.filter((prev) => prev.id !== id))
+            let res = await deleteData(id);
+            if(res.status === 200)
+            {
+                setApiData(apiData.filter((prev) => prev.id !== id))
+            }
+            else{
+                console.log("Failed to delete the post", res.status)
+            }
+
+        }
+        catch(error)
+        {
+            console.log(error);
+        }
+    }
+    const handleUpdateData = () => {
+        try{
+
         }
         catch(error)
         {
@@ -22,7 +38,7 @@ export const PostCards = ({apiData, setApiData}) => {
                         <li key={id}>
                         <p>Title: {title}</p>
                         <p>Body: {body}</p>
-                        <button>Edit</button>
+                        <button onClick={() => handleUpdateData(id)}>Edit</button>
                         <button className="btn-delete" onClick={() => handleDeleteData(id)}>Delete</button>
 
                     </li>
